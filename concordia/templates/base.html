@@ -91,16 +91,17 @@
             </ul>
         </nav>
     </header>
-    <main class="{% block extra_main_classes %}{% endblock %}">
-        {% block breadcrumbs-container %}
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb bg-offwhite my-0">
-                    <li class="breadcrumb-item"><a class="primary-text" href="/">Home</a></li>
-                    {% block breadcrumbs %}{% endblock breadcrumbs %}
-                </ol>
-            </nav>
-        {% endblock breadcrumbs-container %}
 
+    {% block breadcrumbs-container %}
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-offwhite my-0">
+                <li class="breadcrumb-item"><a class="primary-text" href="/">Home</a></li>
+                {% block breadcrumbs %}{% endblock breadcrumbs %}
+            </ol>
+        </nav>
+    {% endblock breadcrumbs-container %}
+
+    <main class="{% block extra_main_classes %}{% endblock %}">
         {% block messages-container %}
             <div id="messages" class="row" hidden>
                 <div hidden id="message-template">
