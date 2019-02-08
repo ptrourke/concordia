@@ -1071,7 +1071,6 @@ class ReportCampaignView(TemplateView):
             statuses = project_statuses.get(project.id, [])
             statuses.sort(key=lambda i: sort_order.index(i[0]))
             project.transcription_statuses = statuses
-            project.transcription_statuses
 
 
 def reserve_rate(g, r):
@@ -1295,7 +1294,7 @@ class ReviewListView(ListView):
     )
 
 
-class APIViewMixin(object):
+class APIViewMixin:
     def render_to_response(self, context):
         page_obj = context["page_obj"]
 
