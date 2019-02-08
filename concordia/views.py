@@ -1262,6 +1262,7 @@ class TranscribeListView(ListView):
     paginate_by = 50
     queryset = (
         Asset.objects.published()
+        .order_by("pk")
         .filter(transcription_status=TranscriptionStatus.NOT_STARTED)
         .select_related("item", "item__project", "item__project__campaign")
     )
@@ -1273,6 +1274,7 @@ class ReviewListView(ListView):
     paginate_by = 50
     queryset = (
         Asset.objects.published()
+        .order_by("pk")
         .filter(transcription_status=TranscriptionStatus.SUBMITTED)
         .select_related("item", "item__project", "item__project__campaign")
     )
