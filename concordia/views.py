@@ -23,7 +23,7 @@ from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 from django.core.paginator import Paginator
 from django.db import connection
-from django.db.models import Case, Count, IntegerField, Max, Q, When
+from django.db.models import Case, Count, IntegerField, Max, OuterRef, Q, Subquery, When
 from django.db.transaction import atomic
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
@@ -1274,7 +1274,7 @@ class TranscribeListView(ListView):
 
         if self.request.GET.get("campaign_filter"):
             campaign_filter = self.request.GET.get("campaign_filter")
-            return (
+            asset_qs = (
                 Asset.objects.published()
                 .order_by(order_field)
                 .filter(
@@ -1285,7 +1285,7 @@ class TranscribeListView(ListView):
                 .select_related("item", "item__project", "item__project__campaign")
             )
         else:
-            return (
+            asset_qs = (
                 Asset.objects.published()
                 .order_by(order_field)
                 .filter(
@@ -1294,6 +1294,16 @@ class TranscribeListView(ListView):
                 )
                 .select_related("item", "item__project", "item__project__campaign")
             )
+        latest_trans_subquery = (
+            Transcription.objects.filter(asset=OuterRef("pk"))
+            .order_by("-pk")
+            .values("text")
+        )
+
+        assets = asset_qs.annotate(
+            latest_transcription=Subquery(latest_trans_subquery[:1])
+        )
+        return assets
 
 
 class ReviewListView(ListView):
@@ -1314,7 +1324,7 @@ class ReviewListView(ListView):
 
         if self.request.GET.get("campaign_filter"):
             campaign_filter = self.request.GET.get("campaign_filter")
-            return (
+            asset_qs = (
                 Asset.objects.published()
                 .order_by(order_field)
                 .filter(
@@ -1324,12 +1334,22 @@ class ReviewListView(ListView):
                 .select_related("item", "item__project", "item__project__campaign")
             )
         else:
-            return (
+            asset_qs = (
                 Asset.objects.published()
                 .order_by(order_field)
                 .filter(transcription_status=TranscriptionStatus.SUBMITTED)
                 .select_related("item", "item__project", "item__project__campaign")
             )
+        latest_trans_subquery = (
+            Transcription.objects.filter(asset=OuterRef("pk"))
+            .order_by("-pk")
+            .values("text")
+        )
+
+        assets = asset_qs.annotate(
+            latest_transcription=Subquery(latest_trans_subquery[:1])
+        )
+        return assets
 
 
 class APIViewMixin:
@@ -1372,6 +1392,7 @@ class APIViewMixin:
                         "title": obj.item.project.campaign.title,
                         "href": obj.item.project.campaign.get_absolute_url(),
                     },
+                    "latest_transcription": obj.latest_transcription,
                 }
             )
 
