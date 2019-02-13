@@ -534,6 +534,11 @@ class ProjectDetailView(APIListView):
 
         return ctx
 
+    def serialize_context(self, context):
+        data = super().serialize_context(context)
+        data["project"] = self.serialize_object(context["project"])
+        return data
+
 
 @method_decorator(default_cache_control, name="dispatch")
 class ItemDetailView(APIListView):
@@ -590,6 +595,11 @@ class ItemDetailView(APIListView):
         calculate_asset_stats(item_assets, ctx)
 
         return ctx
+
+    def serialize_context(self, context):
+        data = super().serialize_context(context)
+        data["item"] = self.serialize_object(context["item"])
+        return data
 
 
 @method_decorator(never_cache, name="dispatch")
