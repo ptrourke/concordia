@@ -8,6 +8,8 @@ import {
     mount
 } from 'https://cdnjs.cloudflare.com/ajax/libs/redom/3.18.0/redom.es.min.js';
 
+import {emptyNode} from './utils.js';
+
 let $ = (selector, scope = document) => scope.querySelector(selector);
 
 let $$ = (selector, scope = document) => {
@@ -138,9 +140,7 @@ export class ActionApp {
     }
 
     resetAssetList() {
-        while (this.assetList.firstChild) {
-            this.assetList.removeChild(this.assetList.firstChild);
-        }
+        emptyNode(this.assetList);
     }
 
     setupAssetList() {
