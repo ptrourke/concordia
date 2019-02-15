@@ -222,7 +222,7 @@ export class ActionApp {
         });
 
         $('#close-viewer-button').addEventListener('click', () => {
-            window.actionApp.closeViewer();
+            this.closeViewer();
         });
     }
 
