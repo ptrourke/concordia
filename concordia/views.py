@@ -1287,12 +1287,18 @@ class AssetListView(APIListView):
             "sequence": obj.sequence,
             "resource_url": obj.resource_url,
             "metadata": obj.item.metadata,
-            "item": {"title": obj.item.title, "url": obj.item.get_absolute_url()},
+            "item": {
+                "id": obj.item.pk,
+                "title": obj.item.title,
+                "url": obj.item.get_absolute_url(),
+            },
             "project": {
+                "id": obj.item.project.pk,
                 "title": obj.item.project.title,
                 "url": obj.item.project.get_absolute_url(),
             },
             "campaign": {
+                "id": obj.item.project.campaign.pk,
                 "title": obj.item.project.campaign.title,
                 "url": obj.item.project.campaign.get_absolute_url(),
             },
