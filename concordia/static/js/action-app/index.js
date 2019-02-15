@@ -331,8 +331,9 @@ export class ActionApp {
             this.seadragonViewer.close();
         }
 
-        if ($('.asset-active')) {
-            $('.asset-active').scrollIntoView({
+        let activeAsset = $('.asset-active');
+        if (activeAsset) {
+            activeAsset.scrollIntoView({
                 behavior: 'smooth',
                 block: 'center',
                 inline: 'nearest'
