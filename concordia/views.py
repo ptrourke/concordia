@@ -1286,7 +1286,6 @@ class AssetListView(APIListView):
             "difficulty": obj.difficulty,
             "sequence": obj.sequence,
             "resource_url": obj.resource_url,
-            "metadata": obj.item.metadata,
             "item": {
                 "id": obj.item.pk,
                 "title": obj.item.title,
