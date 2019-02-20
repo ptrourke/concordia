@@ -172,11 +172,7 @@ export class ActionApp {
                     elem.classList.remove('asset-active', 'border-primary');
                 });
                 target.classList.add('asset-active', 'border-primary');
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'center',
-                    inline: 'nearest'
-                });
+                this.scrollToActiveAsset();
                 return false;
             }
         };
@@ -325,7 +321,7 @@ export class ActionApp {
             i.href = asset.campaign.url;
         });
         $$('.resource-url').forEach(i => {
-            i.innerText = asset.resource_url;
+            i.innerText = asset.resource_url + '?sp=' + asset.sequence;
             i.href = asset.resource_url + '?sp=' + asset.sequence;
         });
 
