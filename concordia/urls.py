@@ -84,6 +84,7 @@ urlpatterns = [
     path("help-center/how-to-review/", views.simple_page, name="how-to-review"),
     path("help-center/how-to-tag/", views.simple_page, name="how-to-tag"),
     path("for-educators/", views.simple_page, name="for-educators"),
+    path("tags/", views.AllTagsView.as_view(), name="all-tags"),
     path(
         "latest/",
         RedirectView.as_view(pattern_name="about", permanent=True, query_string=True),
