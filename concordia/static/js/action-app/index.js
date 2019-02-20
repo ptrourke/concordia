@@ -358,13 +358,7 @@ export class ActionApp {
         this.seadragonViewer.open({type: 'image', url: asset.thumbnail});
     }
 
-    closeViewer() {
-        delete this.appElement.dataset.openAssetId;
-
-        if (this.seadragonViewer.isOpen()) {
-            this.seadragonViewer.close();
-        }
-
+    scrollToActiveAsset() {
         let activeAsset = $('.asset-active');
         if (activeAsset) {
             activeAsset.scrollIntoView({
@@ -373,5 +367,14 @@ export class ActionApp {
                 inline: 'nearest'
             });
         }
+    }
+
+    closeViewer() {
+        delete this.appElement.dataset.openAssetId;
+
+        if (this.seadragonViewer.isOpen()) {
+            this.seadragonViewer.close();
+        }
+        this.scrollToActiveAsset();
     }
 }
