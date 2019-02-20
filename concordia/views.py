@@ -1332,6 +1332,10 @@ class TranscribeListView(AssetListView):
         order_field = self.get_ordering()
         if order_field:
             asset_qs.order_by(order_field)
+        else:
+            asset_qs.order_by(
+                "item.project.campaign", "item.project", "item", "sequence"
+            )
 
         latest_trans_subquery = (
             Transcription.objects.filter(asset=OuterRef("pk"))
@@ -1370,6 +1374,10 @@ class ReviewListView(AssetListView):
         order_field = self.get_ordering()
         if order_field:
             asset_qs.order_by(order_field)
+        else:
+            asset_qs.order_by(
+                "item.project.campaign", "item.project", "item", "sequence"
+            )
 
         latest_trans_subquery = (
             Transcription.objects.filter(asset=OuterRef("pk"))
