@@ -309,20 +309,24 @@ export class ActionApp {
         this.appElement.dataset.openAssetId = asset.id;
 
         $$('.asset-title', this.assetViewer).forEach(i => {
-            i.innerText = asset.title;
+            i.innerText = 'Image ' + asset.sequence;
             i.href = asset.url;
         });
         $$('.item-title', this.assetViewer).forEach(i => {
             i.innerText = asset.item.title;
             i.href = asset.item.url;
         });
-        $$('.project-title', this.assetViewer).forEach(i => {
+        $$('.project-title').forEach(i => {
             i.innerText = asset.project.title;
             i.href = asset.project.url;
         });
-        $$('.campaign-title', this.assetViewer).forEach(i => {
+        $$('.campaign-title').forEach(i => {
             i.innerText = asset.campaign.title;
             i.href = asset.campaign.url;
+        });
+        $$('.resource-url').forEach(i => {
+            i.innerText = asset.resource_url;
+            i.href = asset.resource_url + '?sp=' + asset.sequence;
         });
 
         // This should be a component which renders based on the mode and the provided data
