@@ -17,6 +17,11 @@ echo "Ensuring our base configuration is present in the database"
 echo "Initializing difficulty values"
 ./manage.py initialize_difficulty_values
 
+echo "Flattening, de-duping and refreshing tag data"
+./manage.py flatten_tags
+./manage.py dedupe_tags
+./manage.py refresh_tags
+
 if [ -v SENTRY_BACKEND_DSN ]; then
     echo "Testing Sentry configuration"
     ./manage.py raven test
