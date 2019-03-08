@@ -78,6 +78,7 @@ INSTALLED_APPS = [
     "django_prometheus_metrics",
     "robots",
     "django_celery_beat",
+    "channels",
 ]
 
 MIDDLEWARE = [
@@ -304,3 +305,5 @@ TRANSCRIPTION_RESERVATION_SECONDS = 5 * 60
 
 #: Web cache policy settings
 DEFAULT_PAGE_TTL = 5 * 60
+
+ASGI_APPLICATION = "concordia.routing.application"
